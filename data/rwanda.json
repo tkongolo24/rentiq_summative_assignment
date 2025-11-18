@@ -1,0 +1,232 @@
+{
+  "country": "Rwanda",
+  "currency": "RWF",
+  "neighborhoods": [
+    {
+      "name": "Kimironko",
+      "coordinates": {
+        "lat": -1.9441,
+        "lon": 30.1045
+      },
+      "properties": [
+        {
+          "type": "1 Bedroom",
+          "avg_price": 150000,
+          "min": 120000,
+          "max": 180000,
+          "trend": [140000, 145000, 148000, 150000]
+        },
+        {
+          "type": "2 Bedroom",
+          "avg_price": 250000,
+          "min": 200000,
+          "max": 300000,
+          "trend": [240000, 245000, 248000, 250000]
+        },
+        {
+          "type": "3 Bedroom",
+          "avg_price": 400000,
+          "min": 350000,
+          "max": 500000,
+          "trend": [390000, 395000, 398000, 400000]
+        }
+      ]
+    },
+    {
+      "name": "Kacyiru",
+      "coordinates": {
+        "lat": -1.9536,
+        "lon": 30.0906
+      },
+      "properties": [
+        {
+          "type": "1 Bedroom",
+          "avg_price": 180000,
+          "min": 150000,
+          "max": 220000,
+          "trend": [170000, 175000, 178000, 180000]
+        },
+        {
+          "type": "2 Bedroom",
+          "avg_price": 300000,
+          "min": 250000,
+          "max": 350000,
+          "trend": [290000, 295000, 298000, 300000]
+        },
+        {
+          "type": "3 Bedroom",
+          "avg_price": 500000,
+          "min": 450000,
+          "max": 600000,
+          "trend": [480000, 490000, 495000, 500000]
+        }
+      ]
+    },
+    {
+      "name": "Nyarutarama",
+      "coordinates": {
+        "lat": -1.9378,
+        "lon": 30.1119
+      },
+      "properties": [
+        {
+          "type": "2 Bedroom",
+          "avg_price": 450000,
+          "min": 400000,
+          "max": 550000,
+          "trend": [440000, 445000, 448000, 450000]
+        },
+        {
+          "type": "3 Bedroom",
+          "avg_price": 700000,
+          "min": 600000,
+          "max": 850000,
+          "trend": [680000, 690000, 695000, 700000]
+        },
+        {
+          "type": "Studio",
+          "avg_price": 350000,
+          "min": 300000,
+          "max": 400000,
+          "trend": [340000, 345000, 348000, 350000]
+        }
+      ]
+    },
+    {
+      "name": "Remera",
+      "coordinates": {
+        "lat": -1.9578,
+        "lon": 30.1048
+      },
+      "properties": [
+        {
+          "type": "1 Bedroom",
+          "avg_price": 140000,
+          "min": 110000,
+          "max": 170000,
+          "trend": [135000, 138000, 140000, 140000]
+        },
+        {
+          "type": "2 Bedroom",
+          "avg_price": 230000,
+          "min": 180000,
+          "max": 280000,
+          "trend": [225000, 228000, 230000, 230000]
+        },
+        {
+          "type": "3 Bedroom",
+          "avg_price": 380000,
+          "min": 320000,
+          "max": 450000,
+          "trend": [370000, 375000, 378000, 380000]
+        }
+      ]
+    },
+    {
+      "name": "Gikondo",
+      "coordinates": {
+        "lat": -1.9789,
+        "lon": 30.0636
+      },
+      "properties": [
+        {
+          "type": "1 Bedroom",
+          "avg_price": 100000,
+          "min": 80000,
+          "max": 130000,
+          "trend": [95000, 98000, 100000, 100000]
+        },
+        {
+          "type": "2 Bedroom",
+          "avg_price": 180000,
+          "min": 150000,
+          "max": 220000,
+          "trend": [175000, 178000, 180000, 180000]
+        },
+        {
+          "type": "Studio",
+          "avg_price": 75000,
+          "min": 60000,
+          "max": 90000,
+          "trend": [70000, 73000, 75000, 75000]
+        }
+      ]
+    },
+    {
+      "name": "Kigali Heights",
+      "coordinates": {
+        "lat": -1.9447,
+        "lon": 30.0919
+      },
+      "properties": [
+        {
+          "type": "2 Bedroom",
+          "avg_price": 500000,
+          "min": 450000,
+          "max": 600000,
+          "trend": [490000, 495000, 498000, 500000]
+        },
+        {
+          "type": "3 Bedroom",
+          "avg_price": 800000,
+          "min": 700000,
+          "max": 950000,
+          "trend": [780000, 790000, 795000, 800000]
+        }
+      ]
+    },
+    {
+      "name": "Kibagabaga",
+      "coordinates": {
+        "lat": -1.9689,
+        "lon": 30.1189
+      },
+      "properties": [
+        {
+          "type": "1 Bedroom",
+          "avg_price": 120000,
+          "min": 100000,
+          "max": 150000,
+          "trend": [115000, 118000, 120000, 120000]
+        },
+        {
+          "type": "2 Bedroom",
+          "avg_price": 200000,
+          "min": 170000,
+          "max": 240000,
+          "trend": [195000, 198000, 200000, 200000]
+        }
+      ]
+    },
+    {
+      "name": "Nyamirambo",
+      "coordinates": {
+        "lat": -1.9742,
+        "lon": 30.0456
+      },
+      "properties": [
+        {
+          "type": "1 Bedroom",
+          "avg_price": 110000,
+          "min": 90000,
+          "max": 140000,
+          "trend": [105000, 108000, 110000, 110000]
+        },
+        {
+          "type": "2 Bedroom",
+          "avg_price": 190000,
+          "min": 160000,
+          "max": 230000,
+          "trend": [185000, 188000, 190000, 190000]
+        },
+        {
+          "type": "Studio",
+          "avg_price": 80000,
+          "min": 65000,
+          "max": 95000,
+          "trend": [75000, 78000, 80000, 80000]
+        }
+      ]
+    }
+  ]
+}

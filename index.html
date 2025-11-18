@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RentIQ - Transparent rent prices for neighborhoods in Rwanda">
+    <title>RentIQ - Rent Intelligence Platform</title>
+    
+    <!-- Our custom styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Chart.js for price trend graphs - using CDN so no installation needed -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <!-- Leaflet for interactive maps - free and open source -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</head>
+<body>
+    <!-- Header section -->
+    <header>
+        <div class="container">
+            <h1><iconify-icon icon="mdi:home-city" width="40"></iconify-icon> RentIQ</h1>
+            <p class="tagline">Transparent Rent Data for Rwanda</p>
+            <p class="subtitle">Make informed decisions with real neighborhood pricing</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Country selector - showing future expansion capability -->
+        <section class="country-selector">
+            <label for="country"><iconify-icon icon="mdi:map-marker" width="20"></iconify-icon> Select Country:</label>
+            <select id="country">
+                <option value="rwanda">🇷🇼 Rwanda (Live Data)</option>
+                <option value="kenya" disabled>🇰🇪 Kenya (Coming Soon)</option>
+                <option value="uganda" disabled>🇺🇬 Uganda (Coming Soon)</option>
+                <option value="nigeria" disabled>🇳🇬 Nigeria (Coming Soon)</option>
+            </select>
+        </section>
+
+        <!-- Main search interface -->
+        <section class="search-section">
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    id="neighborhoodSearch" 
+                    placeholder="Search neighborhood (e.g., Kimironko, Kacyiru, Remera...)"
+                    list="neighborhoodList"
+                    autocomplete="off"
+                >
+                <!-- Datalist provides autocomplete suggestions -->
+                <datalist id="neighborhoodList"></datalist>
+                <button id="searchBtn" class="primary-btn">
+                    <span>Search</span>
+                </button>
+            </div>
+            <p class="search-hint"><iconify-icon icon="mdi:lightbulb-on" width="18"></iconify-icon> Try: Kimironko, Nyarutarama, Gikondo, or any Kigali neighborhood</p>
+        </section>
+
+        <!-- Error display - hidden by default -->
+        <div id="errorMessage" class="error-message hidden"></div>
+
+        <!-- Loading indicator -->
+        <div id="loadingIndicator" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Loading data...</p>
+        </div>
+
+        <!-- Results container - shows after successful search -->
+        <div id="results" class="results hidden">
+            
+            <!-- Neighborhood header with weather -->
+            <div class="neighborhood-header">
+                <div class="header-left">
+                    <h2 id="neighborhoodName"></h2>
+                    <p class="neighborhood-subtitle">Rental Market Overview</p>
+                </div>
+                <div id="weatherInfo" class="weather-info">
+                    <!-- Weather data populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Currency converter section -->
+            <div class="currency-section">
+                <div class="currency-controls">
+                    <label for="currencySelect"><iconify-icon icon="mdi:currency-usd" width="20"></iconify-icon> View prices in:</label>
+                    <select id="currencySelect">
+                        <option value="RWF" selected>RWF (Rwandan Franc)</option>
+                        <option value="USD">USD (US Dollar)</option>
+                        <option value="EUR">EUR (Euro)</option>
+                    </select>
+                </div>
+                <div id="exchangeRateInfo" class="exchange-rate-info"></div>
+            </div>
+
+            <!-- Filter and sort controls -->
+            <div class="controls">
+                <div class="control-group">
+                    <label for="propertyFilter"><iconify-icon icon="mdi:office-building" width="20"></iconify-icon> Property Type:</label>
+                    <select id="propertyFilter">
+                        <option value="all">All Types</option>
+                        <option value="Studio">Studio</option>
+                        <option value="1 Bedroom">1 Bedroom</option>
+                        <option value="2 Bedroom">2 Bedroom</option>
+                        <option value="3 Bedroom">3 Bedroom</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="sortSelect"><iconify-icon icon="mdi:sort" width="20"></iconify-icon> Sort by Price:</label>
+                    <select id="sortSelect">
+                        <option value="none">Default Order</option>
+                        <option value="asc">Price: Low to High</option>
+                        <option value="desc">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Property cards grid -->
+            <div id="propertyGrid" class="property-grid">
+                <!-- Cards generated by JavaScript -->
+            </div>
+
+            <!-- Interactive map section -->
+            <div class="map-section">
+                <h3><iconify-icon icon="mdi:map-marker-radius" width="24"></iconify-icon> Neighborhood Location</h3>
+                <p class="section-description">Explore the area and nearby amenities</p>
+                <div id="map" class="map-container"></div>
+            </div>
+
+            <!-- Price trend chart -->
+            <div class="chart-section">
+                <h3><iconify-icon icon="mdi:chart-line" width="24"></iconify-icon> Price Trends - Last 4 Months</h3>
+                <p class="section-description">Track how rental prices have changed over time</p>
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer with credits -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Data Sources</h4>
+                    <ul>
+                        <li><iconify-icon icon="mdi:chart-bar" width="18"></iconify-icon> Rent Data: Rwanda Market Research</li>
+                        <li><iconify-icon icon="mdi:weather-partly-cloudy" width="18"></iconify-icon> Weather: <a href="https://openweathermap.org/" target="_blank">OpenWeatherMap API</a></li>
+                        <li><iconify-icon icon="mdi:currency-usd" width="18"></iconify-icon> Currency: <a href="https://www.exchangerate-api.com/" target="_blank">ExchangeRate-API</a></li>
+                        <li><iconify-icon icon="mdi:map" width="18"></iconify-icon> Maps: <a href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap</a></li> 
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>About RentIQ</h4>
+                    <p>Providing transparent rental information to help tenants, landlords, and real estate professionals make informed decisions.</p>
+                    <p class="future-note"><iconify-icon icon="mdi:rocket-launch" width="18"></iconify-icon> Coming soon: Kenya, Uganda, Nigeria & Ghana</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 RentIQ | Built for educational purposes</p>
+                <p>
+                    <a href="https://github.com/tkongolo24/rentiq_summative_assignment" target="_blank" id="githubLink">
+                        View on GitHub
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Load our configuration and main app script -->
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
