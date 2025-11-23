@@ -3,239 +3,377 @@
 > Transparent rental pricing data for neighborhoods in Rwanda
 
 ![RentIQ Demo](https://img.shields.io/badge/Status-Live-success)
-![License](https://img.shields.io/badge/License-MIT-blue)
+![Deployment](https://img.shields.io/badge/Deployment-Production-blue)
 
 ## 📖 Overview
 
 RentIQ provides transparent rent data for neighborhoods across Kigali, Rwanda. The platform displays average, minimum, and maximum rental prices for different property types, along with price trends, weather information, and interactive maps.
 
-**Live Demo:** [View on GitHub Pages](#) _(add link after deployment)_
+**🌐 Live Application:** http://3.86.198.215
+
+**Architecture:** Load-balanced deployment across multiple web servers
 
 ## ✨ Features
 
 - 🔍 **Neighborhood Search** - Search across 8 major Kigali neighborhoods
 - 🏘️ **Property Types** - Studio, 1BR, 2BR, 3BR apartments
-- 💱 **Multi-Currency** - View prices in RWF, USD, or EUR
-- 📊 **Price Trends** - 4-month historical price charts
-- 🗺️ **Interactive Maps** - Location visualization with OpenStreetMap
-- 🌤️ **Live Weather** - Current weather for each neighborhood
-- 🔄 **Filter & Sort** - By property type and price range
-- 📱 **Mobile Responsive** - Works on desktop, tablet, and mobile
+- 💱 **Multi-Currency Support** - View prices in RWF, USD, or EUR with live exchange rates
+- 📊 **Price Trends** - 4-month historical price charts using Chart.js
+- 🗺️ **Interactive Maps** - Location visualization with Leaflet.js and OpenStreetMap
+- 🌤️ **Live Weather Integration** - Real-time weather data via OpenWeatherMap API
+- 🔄 **Dynamic Filtering** - Filter by property type and sort by price
+- 📱 **Fully Responsive** - Optimized for desktop, tablet, and mobile devices
+
+## 🏗️ Architecture
+```
+Internet Traffic
+       ↓
+┌──────────────────┐
+│  Load Balancer   │ - HAProxy (3.86.198.215)
+│   (Lb01)         │ - Round-robin distribution
+└──────────────────┘ - Health checks enabled
+       ↓
+┌──────────────────┐
+│   Web Server     │ - Nginx (3.92.202.78)
+│   (Web02)        │ - Serves static files
+└──────────────────┘ - Security headers enabled
+       ↓
+┌──────────────────┐
+│   RentIQ App     │ - HTML/CSS/JavaScript
+│                  │ - External API integration
+└──────────────────┘
+```
 
 ## 🚀 Technologies Used
 
-- **Frontend:** HTML5, CSS3, Vanilla JavaScript
-- **Charts:** Chart.js 4.4.0
-- **Maps:** Leaflet.js 1.9.4
-- **APIs:**
-  - [OpenWeatherMap API](https://openweathermap.org/api) - Weather data
-  - [ExchangeRate-API](https://www.exchangerate-api.com/) - Currency conversion
-  - [OpenStreetMap/Nominatim](https://www.openstreetmap.org/) - Maps
+### Frontend
+- **HTML5** - Semantic markup
+- **CSS3** - Custom styling with Flexbox/Grid
+- **Vanilla JavaScript** - No frameworks, pure ES6+
+
+### Libraries & APIs
+- **Chart.js 4.4.0** - Data visualization
+- **Leaflet.js 1.9.4** - Interactive maps
+- **OpenWeatherMap API** - Real-time weather data
+- **ExchangeRate-API** - Currency conversion
+- **OpenStreetMap/Nominatim** - Geocoding and map tiles
+
+### Infrastructure
+- **Nginx** - Web server
+- **HAProxy** - Load balancer
+- **Ubuntu 20.04 LTS** - Server OS
+- **Git** - Version control
 
 ## 📂 Project Structure
 ```
 rentiq/
 ├── index.html          # Main HTML structure
-├── styles.css          # Responsive CSS styling
-├── app.js             # Application logic
+├── styles.css          # Responsive CSS styling  
+├── app.js             # Application logic & API calls
 ├── config.js          # API configuration (gitignored)
 ├── data/
-│   └── rwanda.json    # Rent data for Rwanda
+│   └── rwanda.json    # Rent data for 8 neighborhoods
+├── .gitignore         # Excludes sensitive files
 └── README.md          # Documentation
 ```
 
-## 🛠️ Local Installation
+## 🛠️ Local Development Setup
 
 ### Prerequisites
 - Modern web browser (Chrome, Firefox, Safari, Edge)
 - Code editor (VS Code recommended)
-- Live Server extension (for development)
+- Live Server extension OR Python 3
 
-### Setup Steps
+### Installation Steps
 
-1. **Clone the repository**
+**1. Clone the repository**
 ```bash
-   git clone https://github.com/yourusername/rentiq.git
-   cd rentiq
+git clone https://github.com/tkongolo24/rentiq_summative_assignment.git
+cd rentiq_summative_assignment
 ```
 
-2. **Create config.js file**
+**2. Create config.js file**
 ```bash
-   cp config.example.js config.js
+touch config.js
 ```
 
-3. **Add your API keys to config.js**
+**3. Add your API configuration**
+
+Edit `config.js`:
 ```javascript
-   const CONFIG = {
-       WEATHER_API_KEY: 'your-openweathermap-key-here',
-       // ...
-   };
+const CONFIG = {
+    WEATHER_API_KEY: 'your-openweathermap-api-key',
+    WEATHER_API_URL: 'https://api.openweathermap.org/data/2.5/weather',
+    EXCHANGE_RATE_API_URL: 'https://api.exchangerate-api.com/v4/latest/RWF',
+    GEOCODING_API_URL: 'https://nominatim.openstreetmap.org/search'
+};
 ```
 
-4. **Run with Live Server**
-   - Open folder in VS Code
-   - Right-click `index.html`
-   - Select "Open with Live Server"
-   - App opens at `http://localhost:5500`
+**4. Run locally**
 
-### Alternative: Python Server
+**Option A: VS Code Live Server**
+- Install Live Server extension
+- Right-click `index.html` → "Open with Live Server"
+- App opens at `http://localhost:5500`
+
+**Option B: Python HTTP Server**
 ```bash
 # Python 3
-python -m http.server 8000
+python3 -m http.server 8000
 
-# Python 2
-python -m SimpleHTTPServer 8000
+# Then open http://localhost:8000
 ```
-
-Then open `http://localhost:8000`
 
 ## 🔑 API Keys Setup
 
-### OpenWeatherMap (Required for weather feature)
+### OpenWeatherMap API (Required)
 
-1. Go to https://openweathermap.org/api
+1. Visit https://openweathermap.org/api
 2. Sign up for free account
-3. Navigate to API keys section
-4. Copy your API key
+3. Navigate to API Keys section
+4. Generate new key
 5. Add to `config.js`
 
-**Note:** Free tier includes 60 calls/minute (more than enough)
+**Note:** 
+- Free tier: 60 calls/minute, 1,000,000 calls/month
+- Key activation takes 10-15 minutes
 
-### ExchangeRate-API (No key needed)
+### ExchangeRate-API (No Setup Required)
 - Uses free public endpoint
-- No registration required
+- No registration or key needed
+- Updates daily
 
-## 📊 Data Sources
+## 📊 Data & Coverage
 
-### Rent Data
-- **Source:** Market research and aggregated listings
-- **Coverage:** 8 neighborhoods in Kigali
-- **Properties:** Studio to 3-bedroom apartments
-- **Update Frequency:** Quarterly
+### Neighborhoods
+- **Kimironko** - Central, mixed residential
+- **Kacyiru** - Government district
+- **Nyarutarama** - Upscale residential
+- **Remera** - Commercial hub
+- **Gikondo** - Industrial area
+- **Kigali Heights** - High-end apartments
+- **Kibagabaga** - Student-friendly
+- **Nyamirambo** - Traditional neighborhood
 
-### Neighborhoods Included
-- Kimironko
-- Kacyiru
-- Nyarutarama
-- Remera
-- Gikondo
-- Kigali Heights
-- Kibagabaga
-- Nyamirambo
+### Property Types
+- Studio apartments
+- 1-bedroom apartments
+- 2-bedroom apartments
+- 3-bedroom apartments
 
-## 🎯 Usage Examples
+### Data Sources
+- Market research and aggregated listings
+- Quarterly updates
+- Prices in Rwandan Francs (RWF)
+
+## 🚢 Deployment Guide
+
+### Current Production Deployment
+
+**Servers:**
+- **Load Balancer:** 3.86.198.215 (Lb01)
+- **Web Server:** 3.92.202.78 (Web02)
+
+### Deploy to New Server
+
+**1. Server Requirements**
+- Ubuntu 20.04+ LTS
+- Nginx installed
+- SSH access with sudo privileges
+
+**2. Install Dependencies**
+```bash
+ssh ubuntu@your-server-ip
+
+# Update system
+sudo apt update && sudo apt upgrade -y
+
+# Install Nginx
+sudo apt install nginx git -y
+```
+
+**3. Deploy Application**
+```bash
+# Create web directory
+sudo mkdir -p /var/www/rentiq
+sudo chown -R $USER:$USER /var/www/rentiq
+
+# Clone repository
+cd /var/www/rentiq
+git clone https://github.com/tkongolo24/rentiq_summative_assignment.git .
+
+# Create config.js with your API keys
+nano config.js
+```
+
+**4. Configure Nginx**
+```bash
+sudo tee /etc/nginx/sites-available/rentiq << 'EOF'
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    
+    server_name _;
+    root /var/www/rentiq;
+    index index.html;
+    
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+    
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+}
+EOF
+
+# Enable site
+sudo rm /etc/nginx/sites-enabled/default
+sudo ln -s /etc/nginx/sites-available/rentiq /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
+```
+
+### Load Balancer Setup (HAProxy)
+
+**On Load Balancer Server:**
+```bash
+# Install HAProxy
+sudo apt install haproxy -y
+
+# Configure
+sudo tee /etc/haproxy/haproxy.cfg << 'EOF'
+global
+    log /dev/log local0
+    daemon
+
+defaults
+    log global
+    mode http
+    timeout connect 5000
+    timeout client 50000
+    timeout server 50000
+
+frontend rentiq_frontend
+    bind *:80
+    default_backend rentiq_servers
+
+backend rentiq_servers
+    balance roundrobin
+    option httpchk GET /
+    server web02 3.92.202.78:80 check
+EOF
+
+# Start HAProxy
+sudo systemctl restart haproxy
+```
+
+## 🎯 Usage Guide
 
 ### Search for Neighborhood
-1. Type neighborhood name in search box
-2. Click "Search" or press Enter
-3. View property listings with prices
+1. Type neighborhood name in search box (e.g., "Kimironko")
+2. Autocomplete suggestions appear
+3. Click "Search" or press Enter
+4. View all properties in that area
 
-### Filter Properties
-- Use "Property Type" dropdown to filter by bedroom count
-- Results update instantly
+### Filter & Sort
+- **Filter by Property Type:** Use dropdown to show only specific bedroom counts
+- **Sort by Price:** Arrange from low-to-high or high-to-low
 
-### Sort by Price
-- Select "Low to High" or "High to Low"
-- Helps find properties within budget
+### Currency Conversion
+1. Select currency from dropdown (RWF, USD, EUR)
+2. All prices convert instantly using live exchange rates
+3. Exchange rate information displayed below selector
 
-### Change Currency
-- Select USD or EUR from currency dropdown
-- All prices convert using live exchange rates
+### View Trends & Maps
+- **Price Trends:** Scroll to chart showing 4-month historical data
+- **Interactive Map:** Explore neighborhood location and surroundings
 
-## 🚢 Deployment
+## 🔒 Security Features
 
-### Deployed on Web Servers
-- **Web01:** [IP/URL here]
-- **Web02:** [IP/URL here]
-- **Load Balancer:** [IP/URL here]
+- ✅ Security headers (X-Frame-Options, X-XSS-Protection, etc.)
+- ✅ API keys excluded from repository (`.gitignore`)
+- ✅ Sensitive files blocked in Nginx config
+- ✅ HTTPS ready (certificate can be added with Certbot)
 
-### Deployment Steps
+## 🐛 Troubleshooting
 
-1. **Copy files to servers**
-```bash
-   scp -r * user@web01:/var/www/rentiq/
-   scp -r * user@web02:/var/www/rentiq/
-```
+### Weather Not Loading
+- Check API key is correct in `config.js`
+- Wait 10-15 minutes after creating new OpenWeatherMap key
+- Check browser console for error messages
 
-2. **Configure Nginx on servers**
-```nginx
-   server {
-       listen 80;
-       server_name your-domain.com;
-       root /var/www/rentiq;
-       index index.html;
-   }
-```
+### Map Not Displaying
+- Ensure internet connection (OpenStreetMap requires external tiles)
+- Check browser console for Leaflet.js errors
 
-3. **Setup Load Balancer**
-```nginx
-   upstream rentiq_backend {
-       server web01_ip:80;
-       server web02_ip:80;
-   }
-   
-   server {
-       listen 80;
-       location / {
-           proxy_pass http://rentiq_backend;
-       }
-   }
-```
+### Prices Not Converting
+- ExchangeRate-API may be temporarily unavailable
+- App will fall back to RWF display
 
-4. **Test load balancing**
-```bash
-   curl http://load-balancer-ip
-```
+## 🔮 Roadmap
 
-_Detailed deployment guide coming after server access confirmed_
+**Phase 1: Expansion** (Q1 2026)
+- [ ] Add Kenya (Nairobi neighborhoods)
+- [ ] Add Uganda (Kampala neighborhoods)
+- [ ] Add Nigeria (Lagos neighborhoods)
 
-## 🐛 Known Issues & Limitations
-
-- Weather API key takes 10-15 minutes to activate after signup
-- Exchange rates update once per day (sufficient for rent prices)
-- Map requires internet connection (OpenStreetMap tiles)
-- Data currently limited to Kigali (expansion planned)
-
-## 🔮 Future Enhancements
-
-- [ ] Add Kenya, Uganda, Nigeria, Ghana
-- [ ] User accounts and saved searches
+**Phase 2: User Features** (Q2 2026)
+- [ ] User accounts and authentication
+- [ ] Saved searches and favorites
 - [ ] Email alerts for price changes
-- [ ] Landlord dashboard for listing properties
-- [ ] Advanced filters (amenities, proximity to landmarks)
-- [ ] Comparison tool (side-by-side neighborhoods)
+- [ ] Property comparison tool
+
+**Phase 3: Platform** (Q3 2026)
+- [ ] Landlord dashboard for listings
+- [ ] Advanced filters (amenities, transport access)
 - [ ] Mobile app (React Native)
+- [ ] API for third-party integration
 
 ## 🤝 Contributing
 
-This is an educational project, but suggestions are welcome!
+This project is part of an educational assignment, but feedback and suggestions are welcome!
 
 1. Fork the repository
-2. Create feature branch (`git checkout -b feature/NewFeature`)
-3. Commit changes (`git commit -m 'Add NewFeature'`)
-4. Push to branch (`git push origin feature/NewFeature`)
-5. Open Pull Request
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
+## 📄 License
 
-## 🙏 Credits & Acknowledgments
+This project is created for educational purposes as part of ALX Software Engineering program.
 
-- **Weather Data:** OpenWeatherMap
-- **Maps:** OpenStreetMap & Leaflet.js
-- **Charts:** Chart.js
-- **Currency Data:** ExchangeRate-API
+## 🙏 Acknowledgments
+
+- **ALX Africa** - Software Engineering Program
+- **Holberton School** - Curriculum and infrastructure
+- **OpenWeatherMap** - Weather data API
+- **OpenStreetMap** - Mapping data and tiles
+- **Chart.js Team** - Visualization library
+- **Leaflet.js Team** - Mapping library
 
 ## 👤 Author
 
-**Your Name**
+**Tumba II Zikoranachukwudi Kongolo**
 - GitHub: [@tkongolo24](https://github.com/tkongolo24)
 - Email: t.kongolo@alustudent.com
+- Project: ALX Software Engineering - Web Infrastructure
 
-## 📞 Support
+## 📞 Support & Contact
 
-For questions or issues:
-- Open an issue on GitHub
-- Email: t.kongolo@alustudent.com
+For questions, issues, or suggestions:
+- 📧 Email: t.kongolo@alustudent.com
+- 🐛 GitHub Issues: [Create an issue](https://github.com/tkongolo24/rentiq_summative_assignment/issues)
 
 ---
 
-**Built with ❤️ for transparent housing markets in Africa**
+**Built with ❤️ for transparent housing markets across Africa**
+
+*Deployed on scalable infrastructure with load balancing and high availability*
