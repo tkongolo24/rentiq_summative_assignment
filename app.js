@@ -60,9 +60,10 @@ async function loadRentData() {
         populateNeighborhoodList();
         
     } catch (error) {
-        console.error('❌ Error loading rent data:', error);
-        showError('Failed to load rental data. Please refresh the page.');
+    console.error('❌ Error loading rent data:', error);
+    showError('⚠️ Unable to load rental data. Please check your internet connection and refresh the page. If the problem persists, the data file may be temporarily unavailable.');
     }
+
 }
 
 // ===================================
@@ -384,10 +385,24 @@ async function loadExchangeRates() {
         updateExchangeRateInfo();
         
     } catch (error) {
-        console.error('❌ Error loading exchange rates:', error);
-        document.getElementById('exchangeRateInfo').textContent = 
-            '⚠️ Currency conversion temporarily unavailable. Showing prices in RWF only.';
+    console.error('❌ Error loading exchange rates:', error);
+    const infoDiv = document.getElementById('exchangeRateInfo');
+    if (infoDiv) {
+        infoDiv.innerHTML = `
+            <small style="color: #e74c3c;">
+                ⚠️ Currency conversion temporarily unavailable. 
+                All prices shown in RWF. 
+                <a href="#" onclick="location.reload(); return false;">Retry</a>
+            </small>
+        `;
     }
+    // Disable currency selector
+    const currencySelect = document.getElementById('currencySelect');
+    if (currencySelect) {
+        currencySelect.value = 'RWF';
+        currencySelect.disabled = true;
+    }
+}
 }
 
 // ===================================
@@ -460,9 +475,16 @@ async function loadWeatherData(coordinates) {
         console.log('✅ Weather data loaded and cached');
         
     } catch (error) {
-        console.error('❌ Error loading weather:', error);
-        weatherDiv.innerHTML = '<small>Weather data<br>unavailable</small>';
+    console.error('❌ Error loading weather:', error);
+    if (weatherDiv) {
+        weatherDiv.innerHTML = `
+            <small style="color: #95a5a6;">
+                <iconify-icon icon="mdi:weather-cloudy-alert" width="24"></iconify-icon><br>
+                Weather data<br>unavailable
+            </small>
+        `;
     }
+}
 }
 
 // Helper function to display weather
@@ -508,9 +530,17 @@ function initializeMap(neighborhood) {
         console.log('✅ Map initialized');
         
     } catch (error) {
-        console.error('❌ Error initializing map:', error);
-        mapDiv.innerHTML = '<p style="padding: 2rem; text-align: center; color: #666;">Map unavailable</p>';
+    console.error('❌ Error initializing map:', error);
+    if (mapDiv) {
+        mapDiv.innerHTML = `
+            <div style="padding: 2rem; text-align: center; color: #666;">
+                <iconify-icon icon="mdi:map-marker-off" width="48" style="color: #e74c3c;"></iconify-icon>
+                <p>Map temporarily unavailable</p>
+                <small>This may be due to network issues or ad blockers.</small>
+            </div>
+        `;
     }
+}
 }
 
 // ===================================
@@ -613,9 +643,18 @@ function updateTrendChart(properties) {
         console.log('✅ Chart updated');
         
     } catch (error) {
-        console.error('❌ Error creating chart:', error);
-        canvas.parentElement.innerHTML = '<p style="padding: 2rem; text-align: center; color: #666;">Chart unavailable</p>';
+    console.error('❌ Error creating chart:', error);
+    const chartContainer = canvas.parentElement;
+    if (chartContainer) {
+        chartContainer.innerHTML = `
+            <div style="padding: 2rem; text-align: center; color: #666;">
+                <iconify-icon icon="mdi:chart-line-variant" width="48" style="color: #e74c3c;"></iconify-icon>
+                <p>Price trend chart temporarily unavailable</p>
+                <small>The data is still available in the property cards above.</small>
+            </div>
+        `;
     }
+}
 }
 
 // ===================================
