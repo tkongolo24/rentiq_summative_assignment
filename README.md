@@ -10,6 +10,7 @@
 RentIQ provides transparent rent data for neighborhoods across Kigali, Rwanda. The platform displays average, minimum, and maximum rental prices for different property types, along with price trends, weather information, and interactive maps.
 
 **🌐 Live Application:** http://3.86.198.215
+**Link to demo video:**https://youtu.be/d6zvoS3xtCg
 
 **Architecture:** Load-balanced deployment across multiple web servers
 
